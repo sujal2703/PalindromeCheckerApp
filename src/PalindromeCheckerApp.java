@@ -1,15 +1,34 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        // Display Application Name
-        System.out.println("------------------------------------");
-        System.out.println("   WELCOME TO PALINDROME CHECKER    ");
-        System.out.println("------------------------------------");
+        String input = "rotator";
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Display Application Version
-        System.out.println("Application Version: 1.0.0");
-        System.out.println("Status: System Initialized...");
+        // 1. Add all characters to the Deque
+        for (char ch : input.toCharArray()) {
+            deque.addLast(ch);
+        }
 
-        // Program exits after this flow
-        System.out.println("------------------------------------");
+        boolean isPalindrome = true;
+
+        // 2. Compare first and last until 0 or 1 character remains
+        while (deque.size() > 1) {
+            char first = deque.removeFirst();
+            char last = deque.removeLast();
+
+            if (first != last) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        System.out.println("Input: " + input);
+        if (isPalindrome) {
+            System.out.println("Result: Deque validation successful! It is a Palindrome.");
+        } else {
+            System.out.println("Result: Deque validation failed! Not a Palindrome.");
+        }
     }
 }
