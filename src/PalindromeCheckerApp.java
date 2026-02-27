@@ -5,20 +5,34 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /*
- * UC12: Strategy Pattern for Palindrome Algorithms
- * Goal: Choose palindrome algorithm dynamically
- * Concepts: Interface, Polymorphism, Strategy Pattern
+ * UC13: Performance Comparison
+ * Goal: Compare different palindrome algorithms
+ * Concept: System.nanoTime()
  */
 
-// Step 1: Strategy Interface
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+class PalindromeAlgorithms {
 
-// Step 2: Stack Strategy Implementation
-class StackStrategy implements PalindromeStrategy {
+    // Method 1: Two Pointer Approach
+    public static boolean checkUsingTwoPointer(String input) {
 
-    public boolean checkPalindrome(String input) {
+        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        char[] arr = normalized.toCharArray();
+
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start < end) {
+            if (arr[start] != arr[end]) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    // Method 2: Stack Approach
+    public static boolean checkUsingStack(String input) {
 
         String normalized = input.toLowerCase().replaceAll("\\s+", "");
         Stack<Character> stack = new Stack<>();
@@ -32,15 +46,11 @@ class StackStrategy implements PalindromeStrategy {
                 return false;
             }
         }
-
         return true;
     }
-}
 
-// Step 3: Deque Strategy Implementation
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String input) {
+    // Method 3: Deque Approach
+    public static boolean checkUsingDeque(String input) {
 
         String normalized = input.toLowerCase().replaceAll("\\s+", "");
         Deque<Character> deque = new ArrayDeque<>();
@@ -54,62 +64,42 @@ class DequeStrategy implements PalindromeStrategy {
                 return false;
             }
         }
-
         return true;
     }
 }
 
-// Step 4: Context Class
-class PalindromeService {
-
-    private PalindromeStrategy strategy;
-
-    public PalindromeService(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean execute(String input) {
-        return strategy.checkPalindrome(input);
-    }
-}
-
-// Step 5: Application Class
-public class UseCase12PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("===== UC12: Strategy Pattern Palindrome Checker =====");
-        System.out.println("Choose Algorithm:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
-        System.out.print("Enter choice (1 or 2): ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // clear buffer
-
+        System.out.println("===== UC13: Performance Comparison =====");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        PalindromeStrategy strategy;
+        // Two Pointer Timing
+        long start1 = System.nanoTime();
+        boolean result1 = PalindromeAlgorithms.checkUsingTwoPointer(input);
+        long end1 = System.nanoTime();
+        long time1 = end1 - start1;
 
-        // Inject strategy at runtime
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
+        // Stack Timing
+        long start2 = System.nanoTime();
+        boolean result2 = PalindromeAlgorithms.checkUsingStack(input);
+        long end2 = System.nanoTime();
+        long time2 = end2 - start2;
 
-        PalindromeService service = new PalindromeService(strategy);
+        // Deque Timing
+        long start3 = System.nanoTime();
+        boolean result3 = PalindromeAlgorithms.checkUsingDeque(input);
+        long end3 = System.nanoTime();
+        long time3 = end3 - start3;
 
-        boolean result = service.execute(input);
-
-        if (result) {
-            System.out.println("Result: It is a Palindrome.");
-        } else {
-            System.out.println("Result: It is NOT a Palindrome.");
-        }
+        System.out.println("\nResults:");
+        System.out.println("Two Pointer Result: " + result1 + " | Time: " + time1 + " ns");
+        System.out.println("Stack Result      : " + result2 + " | Time: " + time2 + " ns");
+        System.out.println("Deque Result      : " + result3 + " | Time: " + time3 + " ns");
 
         scanner.close();
     }
