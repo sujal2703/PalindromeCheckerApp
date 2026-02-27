@@ -73,7 +73,7 @@ class PalindromeService {
 }
 
 // Step 5: Application Class
-public class UseCase12PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
