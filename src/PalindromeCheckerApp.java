@@ -1,4 +1,33 @@
-/*
+
+
+import java.util.*;
+
+class PalindromeCheckerApp {
+
+    // Method to check palindrome using Deque
+    public static boolean isPalindrome(String input) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        // Insert characters into deque
+        for (int i = 0; i < input.length(); i++) {
+            deque.addLast(input.charAt(i));
+        }
+
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
  * UseCase9 - Recursive Palindrome Checker
  * Goal: Check palindrome using Recursion
  */
@@ -53,10 +82,27 @@ class PalindromeChecker {
 }
 
 // Application Class
-public class PalindromeCheckerApp {
+public class PalindromeCheckerApp { main
 
     // Main Method
     public static void main(String[] args) {
+
+ feature/UC7
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("====================================");
+        System.out.println(" Deque Based Palindrome Checker ");
+        System.out.println("====================================");
+
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+        if (isPalindrome(input)) {
+            System.out.println("Result: The string is a PALINDROME ✅");
+        } else {
+            System.out.println("Result: The string is NOT a palindrome ❌");
+        }
+
 
 
         Scanner sc = new Scanner(System.in);
@@ -94,7 +140,7 @@ public class PalindromeCheckerApp {
             System.out.println("Result: It is NOT a Palindrome.");
  main
         }
-
+ main
         sc.close();
     }
 }
