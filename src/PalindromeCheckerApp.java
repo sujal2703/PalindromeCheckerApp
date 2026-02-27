@@ -1,45 +1,60 @@
 import java.util.Scanner;
 
-class PalindromeCheckerApp {
+/*
+ * UC11: Object-Oriented Palindrome Service
+ * Goal: Encapsulate palindrome logic in a class.
+ * Concepts: Encapsulation, SRP, Array
+ */
 
-    public static void main(String[] args) {
+// Service Class
+class PalindromeChecker {
 
-        Scanner sc = new Scanner(System.in);
+    // Method to check whether string is palindrome
+    public boolean checkPalindrome(String input) {
 
-        System.out.println("===== UC10: Case-Insensitive & Space-Ignored Palindrome =====");
-        System.out.print("Enter a string: ");
+        // Normalize string (ignore case and spaces)
+        String normalizedString = input.toLowerCase().replaceAll("\\s+", "");
 
-        String input = sc.nextLine();
-
-        // Step 1: Normalize the string
-        // Convert to lowercase and remove spaces
-        String normalized = input.toLowerCase().replaceAll("\\s+", "");
-
-        // Step 2: Convert to char array
-        char[] arr = normalized.toCharArray();
-
-        // Step 3: Check palindrome using two-pointer method
-        boolean isPalindrome = true;
+        char[] charArray = normalizedString.toCharArray();
 
         int start = 0;
-        int end = arr.length - 1;
+        int end = charArray.length - 1;
 
         while (start < end) {
-            if (arr[start] != arr[end]) {
-                isPalindrome = false;
-                break;
+            if (charArray[start] != charArray[end]) {
+                return false;
             }
             start++;
             end--;
         }
 
-        // Step 4: Print result
-        if (isPalindrome) {
-            System.out.println("Result: It is a palindrome.");
+        return true;
+    }
+}
+
+// Application Class
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("===== UC11: Object-Oriented Palindrome Service =====");
+        System.out.print("Enter a string: ");
+
+        String inputString = scanner.nextLine();
+
+        // Create object of service class
+        PalindromeChecker palindromeChecker = new PalindromeChecker();
+
+        boolean result = palindromeChecker.checkPalindrome(inputString);
+
+        if (result) {
+            System.out.println("Result: It is a Palindrome.");
         } else {
-            System.out.println("Result: It is NOT a palindrome.");
+            System.out.println("Result: It is NOT a Palindrome.");
         }
 
-        sc.close();
+        scanner.close();
     }
 }
